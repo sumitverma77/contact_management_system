@@ -1,7 +1,9 @@
 package com.example.contact_management_system.controller;
 
 import com.example.contact_management_system.dto.request.AddRequest;
+import com.example.contact_management_system.dto.request.DeleteRequest;
 import com.example.contact_management_system.dto.response.AddResponse;
+import com.example.contact_management_system.dto.response.DeleteResponse;
 import com.example.contact_management_system.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,4 +19,10 @@ public class Contacts {
     {
             return  contactService.addService(addRequest);
     }
+    @DeleteMapping ("delete")
+    public DeleteResponse delete(@RequestBody DeleteRequest deleteRequest)
+    {
+        return  contactService.deleteService(deleteRequest);
+    }
+
 }
