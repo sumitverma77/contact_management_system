@@ -2,6 +2,7 @@ package com.example.contact_management_system.service;
 
 import com.example.contact_management_system.dto.request.AddRequest;
 import com.example.contact_management_system.dto.request.DeleteRequest;
+import com.example.contact_management_system.dto.request.SearchByNameRequest;
 import com.example.contact_management_system.dto.response.AddResponse;
 import com.example.contact_management_system.dto.response.DeleteResponse;
 import com.example.contact_management_system.entity.EmployeeContactDetails;
@@ -9,6 +10,7 @@ import com.example.contact_management_system.repo.ContactRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -72,6 +74,16 @@ public class ContactService {
         }
   return deleteResponse;
     }
+public List<EmployeeContactDetails> searchByName(SearchByNameRequest searchByNameRequest)
+{
+    String namePrefix = searchByNameRequest.getPrefix();
+
+    // Use the repository method to find matching EmployeeContactDetails
+    List<EmployeeContactDetails> employeeContactDetails = contactRepo.findAllByNameStartingWith(namePrefix);
+
+    return employeeContactDetails;
+
+}
 
 
 }
