@@ -3,6 +3,7 @@ package com.example.contact_management_system.controller;
 import com.example.contact_management_system.dto.request.AddRequest;
 import com.example.contact_management_system.dto.request.DeleteRequest;
 import com.example.contact_management_system.dto.request.SearchByNameRequest;
+import com.example.contact_management_system.dto.request.SearchByPhoneRequest;
 import com.example.contact_management_system.dto.response.AddResponse;
 import com.example.contact_management_system.dto.response.DeleteResponse;
 import com.example.contact_management_system.entity.EmployeeContactDetails;
@@ -34,6 +35,10 @@ public class Contacts {
     {
         return contactService.searchByName(searchByNameRequest);
     }
-
+    @GetMapping("search/phone")
+    public List<EmployeeContactDetails> searchByPhone(@RequestBody SearchByPhoneRequest searchByPhoneRequest)
+    {
+        return contactService.searchByPhone(searchByPhoneRequest);
+    }
 
 }

@@ -1,8 +1,10 @@
 package com.example.contact_management_system.service;
 
+import com.example.contact_management_system.controller.Contacts;
 import com.example.contact_management_system.dto.request.AddRequest;
 import com.example.contact_management_system.dto.request.DeleteRequest;
 import com.example.contact_management_system.dto.request.SearchByNameRequest;
+import com.example.contact_management_system.dto.request.SearchByPhoneRequest;
 import com.example.contact_management_system.dto.response.AddResponse;
 import com.example.contact_management_system.dto.response.DeleteResponse;
 import com.example.contact_management_system.entity.EmployeeContactDetails;
@@ -78,11 +80,15 @@ public List<EmployeeContactDetails> searchByName(SearchByNameRequest searchByNam
 {
     String namePrefix = searchByNameRequest.getPrefix();
 
-    // Use the repository method to find matching EmployeeContactDetails
+
     List<EmployeeContactDetails> employeeContactDetails = contactRepo.findAllByNameStartingWith(namePrefix);
 
     return employeeContactDetails;
-
+}
+public  List<EmployeeContactDetails> searchByPhone(SearchByPhoneRequest searchByPhoneRequest) {
+    String phonePrefix = searchByPhoneRequest.getPrefix();
+    List<EmployeeContactDetails> employeeContactDetails=contactRepo.findAllByPhoneStartingWith(phonePrefix);
+    return  employeeContactDetails;
 }
 
 
