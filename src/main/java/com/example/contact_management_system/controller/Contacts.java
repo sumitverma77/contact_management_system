@@ -1,11 +1,11 @@
 package com.example.contact_management_system.controller;
 
-import com.example.contact_management_system.dto.request.AddRequest;
-import com.example.contact_management_system.dto.request.DeleteRequest;
-import com.example.contact_management_system.dto.request.SearchByNameRequest;
-import com.example.contact_management_system.dto.request.SearchByPhoneRequest;
-import com.example.contact_management_system.dto.response.AddResponse;
-import com.example.contact_management_system.dto.response.DeleteResponse;
+import com.example.contact_management_system.builder.request.AddRequest;
+import com.example.contact_management_system.builder.request.DeleteRequest;
+import com.example.contact_management_system.builder.request.SearchByNameRequest;
+import com.example.contact_management_system.builder.request.SearchByPhoneRequest;
+import com.example.contact_management_system.builder.response.AddResponse;
+import com.example.contact_management_system.builder.response.DeleteResponse;
 import com.example.contact_management_system.entity.EmployeeContactDetails;
 import com.example.contact_management_system.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins =   "*")
 @RestController
-@RequestMapping("/contact")
+//@RequestMapping("/contact")
+//moved this annotation on project level (check application.properties)
 public class Contacts {
 
     @Autowired

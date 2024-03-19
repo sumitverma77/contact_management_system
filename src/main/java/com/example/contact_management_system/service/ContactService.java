@@ -1,12 +1,12 @@
 package com.example.contact_management_system.service;
 
-import com.example.contact_management_system.controller.Contacts;
-import com.example.contact_management_system.dto.request.AddRequest;
-import com.example.contact_management_system.dto.request.DeleteRequest;
-import com.example.contact_management_system.dto.request.SearchByNameRequest;
-import com.example.contact_management_system.dto.request.SearchByPhoneRequest;
-import com.example.contact_management_system.dto.response.AddResponse;
-import com.example.contact_management_system.dto.response.DeleteResponse;
+import com.example.contact_management_system.builder.converter.DTOConverter;
+import com.example.contact_management_system.builder.request.AddRequest;
+import com.example.contact_management_system.builder.request.DeleteRequest;
+import com.example.contact_management_system.builder.request.SearchByNameRequest;
+import com.example.contact_management_system.builder.request.SearchByPhoneRequest;
+import com.example.contact_management_system.builder.response.AddResponse;
+import com.example.contact_management_system.builder.response.DeleteResponse;
 import com.example.contact_management_system.entity.EmployeeContactDetails;
 import com.example.contact_management_system.repo.ContactRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,53 +14,25 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class ContactService {
     @Autowired
     private ContactRepo contactRepo;
-    public AddResponse addService(AddRequest addRequest)
+    public AddResponse  addService(AddRequest addRequest)
     {
         AddResponse addResponse = new AddResponse();
-        try
+        Optional<EmployeeContactDetails> employeeContactDetails= Optional.ofNullable(contactRepo.findByPhone(addRequest.getPhone()));
+        if(employeeContactDetails.isPresent())
         {
-            EmployeeContactDetails employeeContactDetails=contactRepo.findByPhone(addRequest.getPhone());
-            //ye query Null return kr rha hai but delete wali nhi krr rhi to kaise pta chlega
-            addResponse.setId(employeeContactDetails.getId());
-            addResponse.setMsg("Contact already prsent");
+            addResponse.setId(employeeContactDetails.get().getId());
+            addResponse.setMsg("Contact already present");
         }
-        catch(Exception e)
-        {
-            EmployeeContactDetails newContact=new EmployeeContactDetails();
-
-            newContact.setName(addRequest.getName());
-            newContact.setPhone(addRequest.getPhone());
-            contactRepo.save(newContact);
-            EmployeeContactDetails details=contactRepo.findByPhone(addRequest.getPhone());
-            addResponse.setId(details.getId());
-            addResponse.setMsg("contact added sucessfully");
-
+        else {
+            EmployeeContactDetails newContact= DTOConverter.convertAddRequestToEntity(addRequest);
+           Optional<EmployeeContactDetails> savedDetails= Optional.of(contactRepo.save(newContact));
+            addResponse.setId(savedDetails.get().getId());
+           addResponse.setMsg("contact added sucessfully");
         }
-
-
-//        if(employeeContactDetails!=null)
-//        {
-//
-//             addResponse.setId(employeeContactDetails.getId());
-//             addResponse.setMsg("Contact already prsent");
-//            System.out.println("hello");
-//        }
-//        else {
-//            EmployeeContactDetails newContact=new EmployeeContactDetails();
-//
-//            newContact.setName(addRequest.getName());
-//            newContact.setPhone(addRequest.getPhone());
-//            contactRepo.save(newContact);
-//            EmployeeContactDetails details=contactRepo.findByPhone(addRequest.getPhone());
-//            addResponse.setId(details.getId());
-//            addResponse.setMsg("contact added sucessfully");
-//        }
-
         return addResponse;
     }
     public DeleteResponse deleteService(DeleteRequest deleteRequest)
@@ -78,18 +50,11 @@ public class ContactService {
     }
 public List<EmployeeContactDetails> searchByName(SearchByNameRequest searchByNameRequest)
 {
-    String namePrefix = searchByNameRequest.getPrefix();
-
-
-    List<EmployeeContactDetails> employeeContactDetails = contactRepo.findAllByNameStartingWith(namePrefix);
-
+    List<EmployeeContactDetails> employeeContactDetails = contactRepo.findAllByNameStartingWith(searchByNameRequest.getPrefix());
     return employeeContactDetails;
 }
 public  List<EmployeeContactDetails> searchByPhone(SearchByPhoneRequest searchByPhoneRequest) {
-    String phonePrefix = searchByPhoneRequest.getPrefix();
-    List<EmployeeContactDetails> employeeContactDetails=contactRepo.findAllByPhoneStartingWith(phonePrefix);
+    List<EmployeeContactDetails> employeeContactDetails=contactRepo.findAllByPhoneStartingWith(searchByPhoneRequest.getPrefix());
     return  employeeContactDetails;
 }
-
-
 }
