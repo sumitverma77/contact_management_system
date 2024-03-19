@@ -1,4 +1,4 @@
-package com.example.contact_management_system.builder.request;
+package com.example.contact_management_system.request;
 
 import lombok.Data;
 

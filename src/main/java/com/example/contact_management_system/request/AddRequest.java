@@ -1,4 +1,4 @@
-package com.example.contact_management_system.builder.request;
+package com.example.contact_management_system.request;
 
 import lombok.Data;
 
@@ -6,4 +6,5 @@ import lombok.Data;
 public class AddRequest {
     private String name;
     private String phone ;
+
 }

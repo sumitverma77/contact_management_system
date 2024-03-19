@@ -1,11 +1,11 @@
 package com.example.contact_management_system.controller;
 
-import com.example.contact_management_system.builder.request.AddRequest;
-import com.example.contact_management_system.builder.request.DeleteRequest;
-import com.example.contact_management_system.builder.request.SearchByNameRequest;
-import com.example.contact_management_system.builder.request.SearchByPhoneRequest;
-import com.example.contact_management_system.builder.response.AddResponse;
-import com.example.contact_management_system.builder.response.DeleteResponse;
+import com.example.contact_management_system.request.AddRequest;
+import com.example.contact_management_system.request.DeleteRequest;
+import com.example.contact_management_system.request.SearchByNameRequest;
+import com.example.contact_management_system.request.SearchByPhoneRequest;
+import com.example.contact_management_system.response.AddResponse;
+import com.example.contact_management_system.response.DeleteResponse;
 import com.example.contact_management_system.entity.EmployeeContactDetails;
 import com.example.contact_management_system.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
